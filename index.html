@@ -24,7 +24,7 @@
             padding: 40px 20px;
         }
 
-        /* === IMAGE DE FOND (BIEN VISIBLE) === */
+        /* === IMAGE DE FOND (PLUS CLAIRE) === */
         .bg-image {
             position: fixed;
             inset: 0;
@@ -32,16 +32,16 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
-            opacity: 0.55;
+            opacity: 0.70;
             pointer-events: none;
-            filter: brightness(0.6) saturate(1.2);
+            filter: brightness(0.8) saturate(1.2);
         }
 
         .bg-overlay {
             position: fixed;
             inset: 0;
             z-index: 1;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.50) 100%);
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.35) 100%);
             pointer-events: none;
         }
 
@@ -56,8 +56,8 @@
 
         .particle {
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
             animation: floatParticle 12s ease-in-out infinite;
             box-shadow: 0 0 30px currentColor;
@@ -86,86 +86,82 @@
         .particle:nth-child(9) { --tx: 300px; --ty: -350px; animation-delay: 1.8s; left: 80%; top: 15%; }
         .particle:nth-child(10) { --tx: -200px; --ty: 400px; animation-delay: 5.4s; left: 55%; top: 85%; }
 
-        /* === LOGOS FLOTTANTS (DEVANT AVEC EFFETS LUMINEUX) === */
-        .floating-logos {
-            position: fixed;
-            inset: 0;
+        /* === LOGO WHATSAPP UNIQUE EN HAUT (AVEC EFFETS LUMINEUX) === */
+        .wa-header {
+            text-align: center;
+            margin-bottom: 10px;
+            position: relative;
             z-index: 15;
-            pointer-events: none;
-            overflow: hidden;
         }
 
-        .float-logo {
+        .wa-logo-glow {
+            display: inline-block;
+            position: relative;
+            width: 70px;
+            height: 70px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .wa-logo-glow svg {
+            width: 100%;
+            height: 100%;
+            fill: #25D366;
+            filter: drop-shadow(0 0 30px rgba(37, 211, 102, 0.4));
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
+        }
+
+        /* Anneaux lumineux autour du logo */
+        .glow-ring {
             position: absolute;
-            opacity: 0.35;
-            animation: floatLogo 16s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(255,255,255,0.15));
-        }
-
-        .float-logo svg {
-            width: 80px;
-            height: 80px;
-        }
-
-        .float-logo.whatsapp svg { fill: #25D366; }
-        .float-logo.facebook svg { fill: #1877F2; }
-
-        .float-logo::after {
-            content: '';
-            position: absolute;
-            inset: -20px;
             border-radius: 50%;
-            background: radial-gradient(circle, currentColor 0%, transparent 70%);
-            opacity: 0.10;
-            z-index: -1;
-            animation: glowPulse 3s ease-in-out infinite;
+            border: 2px solid rgba(37, 211, 102, 0.3);
+            animation: ringPulse 2.5s ease-out infinite;
+            z-index: 1;
+        }
+        .glow-ring:nth-child(1) { inset: -5px; border-color: rgba(37, 211, 102, 0.5); animation-delay: 0s; }
+        .glow-ring:nth-child(2) { inset: -18px; border-color: rgba(37, 211, 102, 0.25); animation-delay: 0.8s; }
+        .glow-ring:nth-child(3) { inset: -32px; border-color: rgba(37, 211, 102, 0.12); animation-delay: 1.6s; }
+
+        @keyframes ringPulse {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.6); opacity: 0; }
         }
 
-        .float-logo.whatsapp::after { color: #25D366; }
-        .float-logo.facebook::after { color: #1877F2; }
+        /* Lueur de fond (éclaire le site) */
+        .glow-bg {
+            position: absolute;
+            inset: -50px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 211, 102, 0.20), transparent 70%);
+            animation: glowPulse 2s ease-in-out infinite;
+            z-index: 0;
+        }
 
         @keyframes glowPulse {
-            0%, 100% { transform: scale(0.8); opacity: 0.05; }
-            50% { transform: scale(1.5); opacity: 0.20; }
-        }
-
-        .float-logo:nth-child(1) { top: 4%; left: 3%; animation-delay: 0s; }
-        .float-logo:nth-child(2) { top: 60%; right: 4%; animation-delay: 2.8s; }
-        .float-logo:nth-child(3) { top: 28%; left: 52%; animation-delay: 5.6s; }
-        .float-logo:nth-child(4) { bottom: 6%; left: 6%; animation-delay: 8.4s; }
-        .float-logo:nth-child(5) { top: 8%; right: 12%; animation-delay: 11.2s; }
-        .float-logo:nth-child(6) { bottom: 22%; right: 28%; animation-delay: 2.2s; }
-        .float-logo:nth-child(7) { top: 45%; left: 10%; animation-delay: 4.4s; }
-        .float-logo:nth-child(8) { bottom: 4%; right: 48%; animation-delay: 7s; }
-
-        @keyframes floatLogo {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.20; }
-            25% { transform: translate(35px, -30px) rotate(6deg) scale(1.12); opacity: 0.50; }
-            50% { transform: translate(-25px, 35px) rotate(-4deg) scale(0.92); opacity: 0.30; }
-            75% { transform: translate(45px, 18px) rotate(5deg) scale(1.06); opacity: 0.45; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.20; }
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.3); opacity: 1; }
         }
 
         /* === CARTE PRINCIPALE === */
         .scroll-effect {
             position: relative;
             z-index: 10;
-            background: rgba(30, 10, 30, 0.60);
+            background: rgba(30, 10, 30, 0.50);
             backdrop-filter: blur(16px);
             border-radius: 32px;
-            padding: 45px 38px;
+            padding: 40px 35px;
             max-width: 600px;
             width: 100%;
-            margin: 20px auto;
-            border: 1px solid rgba(255, 105, 180, 0.10);
+            margin: 10px auto 20px;
+            border: 1px solid rgba(255, 105, 180, 0.08);
             box-shadow: 0 0 80px rgba(255, 20, 100, 0.04);
             text-align: center;
-            animation: cardPulse 5s ease-in-out infinite;
-        }
-
-        @keyframes cardPulse {
-            0%, 100% { box-shadow: 0 0 60px rgba(255,20,100,0.03); }
-            50% { box-shadow: 0 0 100px rgba(255,20,100,0.07); }
         }
 
         .scroll-effect::before {
@@ -174,7 +170,7 @@
             inset: -2px;
             border-radius: 34px;
             padding: 2px;
-            background: linear-gradient(135deg, rgba(255,105,180,0.20), rgba(200,50,200,0.10), rgba(255,215,0,0.10), rgba(255,105,180,0.20));
+            background: linear-gradient(135deg, rgba(255,105,180,0.15), rgba(200,50,200,0.08), rgba(255,215,0,0.08), rgba(255,105,180,0.15));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -184,7 +180,7 @@
 
         @keyframes borderGlow {
             0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.7; }
         }
 
         /* === TITRE === */
@@ -358,8 +354,9 @@
         .btn-whatsapp {
             background: #25D366;
             color: #fff;
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.10);
         }
-        .btn-whatsapp:hover { background: #1da851; transform: scale(1.03); }
+        .btn-whatsapp:hover { background: #1da851; transform: scale(1.03); box-shadow: 0 0 50px rgba(37, 211, 102, 0.20); }
         .btn-whatsapp:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
         .status-text {
@@ -440,25 +437,44 @@
         }
         .footer-link a:hover { opacity: 0.6; }
 
+        /* === ACCUEIL ÉCLAIRÉ PAR LE LOGO === */
+        .glow-spread {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(37, 211, 102, 0.06), transparent 70%);
+            z-index: 5;
+            pointer-events: none;
+            animation: spreadGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes spreadGlow {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+            50% { transform: translateX(-50%) scale(1.5); opacity: 0.8; }
+        }
+
         @media (max-width: 600px) {
             .scroll-effect { padding: 28px 18px; margin: 10px; }
             .main-title { font-size: 18px; letter-spacing: 1px; }
             .sub-title { font-size: 10px; letter-spacing: 6px; }
-            .float-logo svg { width: 50px; height: 50px; }
-            .float-logo:nth-child(1) { top: 3%; left: 2%; }
-            .float-logo:nth-child(2) { top: 60%; right: 2%; }
-            .float-logo:nth-child(3) { top: 25%; left: 45%; }
-            .float-logo:nth-child(4) { bottom: 5%; left: 4%; }
-            .float-logo:nth-child(5) { top: 6%; right: 6%; }
-            .float-logo:nth-child(6) { bottom: 18%; right: 20%; }
-            .float-logo:nth-child(7) { top: 42%; left: 6%; }
-            .float-logo:nth-child(8) { bottom: 3%; right: 40%; }
+            .wa-logo-glow { width: 55px; height: 55px; }
+            .glow-ring:nth-child(1) { inset: -3px; }
+            .glow-ring:nth-child(2) { inset: -12px; }
+            .glow-ring:nth-child(3) { inset: -22px; }
+            .glow-bg { inset: -35px; }
+            .glow-spread { width: 200px; height: 200px; top: -60px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- === IMAGE DE FOND === -->
+    <!-- === LUEUR QUI ÉCLAIRCIT LE SITE === -->
+    <div class="glow-spread"></div>
+
+    <!-- === IMAGE DE FOND (PLUS CLAIRE) === -->
     <img class="bg-image" src="189009D3-D2F6-4084-A4E7-8A2EDCFF9B39.jpeg" alt="background" onerror="this.style.display='none'">
     <div class="bg-overlay"></div>
 
@@ -476,16 +492,17 @@
         <div class="particle gold"></div>
     </div>
 
-    <!-- === LOGOS FLOTTANTS (DEVANT AVEC EFFETS LUMINEUX) === -->
-    <div class="floating-logos">
-        <div class="float-logo whatsapp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-        <div class="float-logo facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
-        <div class="float-logo whatsapp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-        <div class="float-logo facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
-        <div class="float-logo whatsapp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-        <div class="float-logo facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
-        <div class="float-logo whatsapp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-        <div class="float-logo facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+    <!-- === LOGO WHATSAPP UNIQUE EN HAUT === -->
+    <div class="wa-header">
+        <div class="wa-logo-glow">
+            <div class="glow-bg"></div>
+            <div class="glow-ring"></div>
+            <div class="glow-ring"></div>
+            <div class="glow-ring"></div>
+            <svg viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </div>
     </div>
 
     <!-- === MUSIQUE === -->
